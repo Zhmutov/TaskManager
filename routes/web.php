@@ -1,81 +1,71 @@
 <?php
+use Illuminate\Http\Request;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
-    return view('welcome');
+    session(['action' => 'start']);
+    return view('deffault');
+})->name('start');//стартовый
+Route::get('/authorization', function () {
+    return view('deffault', ['inf' => 'authorization', 'nextInf'=>[]]);
+})->name('auth');
+Route::post('/authorization', 'UsersController@authorization');
+Route::get('/exit', function () {
+    session(['user_id' => '']);
+    session(['role_id' => '']);
+    session(['FIO' => '']);
+    session(['message'=>'']);
+    session(['login'=>'']);;
+    return redirect()->route('start');
 });
 
-Route::get('/about', function () {
-    return 'About page';
+Route::get('/task', function () {
+    session(['action'=>'task']);
+    return view('deffault');
+})->middleware('noauth');
+
+Route::get('/task/create', function () {
+    return view('deffault', ['inf' => 'createtask', 'nextInf'=>[]]);
+})->middleware('noauth');
+
+Route::post('/task/create', function (Request $request) {
+    return view('deffault', ['inf' => 'testform', 'nextInf'=>[]]);
+})->middleware('noauth')->name('create');
+
+Route::get('/task/my', function () {
+    return view('deffault', ['inf' => 'testform', 'nextInf'=>[]]);
+})->middleware('noauth');
+
+Route::get('/task/forme', function () {
+    return view('deffault', ['inf' => 'testform', 'nextInf'=>[]]);
+})->middleware('noauth');
+
+Route::get('/admin', function () {
+    session(['action'=>'admin']);
+    return view('deffault');
+})->name('admin');
+
+
+//Через панель "Админ меню" заполняем информацию о юзере.
+Route::get('/admin/create', function () {
+    return view('deffault', ['inf' => 'usersCreate', 'nextInf'=>[]]);
 });
+//Добавить Изера и информацию о нем
+Route::post('/admin/create', 'UsersController@usersInfoCreate')->name('usersCreate');
+
+//Список пользователей
+Route::get('/admin/userslist', 'UsersController@getUsersList')->name('usersList');
+
+//Заполняем информацию о пользователе, используем get запрос
+Route::get('/admin/create/{inform_id}', 'UsersController@getOneUsersInf')->name('oneUsersInf');
+//Изменяем информацию о пользователе, используем post запрос
+Route::post('/admin/create/{inform_id}', 'UsersController@updateOneUsersInf')->name('updateOneUsersInf');
 
 
-//Route::get('user/{id?}', function ($id = 0) {
-//    return 'User '.$id;
-//});
-
-Route::post('post', function ($params) {
-    return 'POST';
-});
-
-Route::get('show/{id}', 'UserConrtoller@show');
-Route::get('hide', 'UserConrtoller@hide');
-
-Route::get('su', 'UserConrtoller@su');
-
-
-Route::get('show-user', function () {
-    return view('user');
-});
-
-Route::get('login/{login?}/pass{pass?}', function ($login = 're', $pass = 12){
-
-    if ($login == 'adm' && $pass = '123') {
-        return view('createUser');
-    } else {
-        echo 'User';
-    }
-
-});
-
-Route::get('login/{login?}/password{password?}', 'UserConrtoller@tests');
-
-Route::get('start', function () {
-
-    session_start();
-
-    $_SESSION['username'] = "Viktor";
-    return view('createUser',['userName'=> $_SESSION['username'],
-        'Surname'=>'Zhmutov']);
-
- });
-
-
-//Route::get('/user', 'UserConrtoller@showForm');
-//Route::post('/user', 'UserConrtoller@create');
-
-Route::match(['get', 'post'], '/user', 'UserConrtoller@create');
-
-Route::get('/user{id}', 'UserConrtoller@show')->name('show_user');
-
-
-Route::get('test', function () {
-    print_r(array_combine(array(1, 2, 3, 6), array(4, 5, 6 )));
-}
-
-);
-
-
+Route::get('/changePassword', function () {
+    return view('deffault', ['inf' => 'changePassword', 'nextInf'=>[]]);
+})->name('changePassword');
+Route::post('/changePassword', 'UsersController@changePassword');
 
 
 

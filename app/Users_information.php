@@ -21,7 +21,7 @@ class Users_information extends Model
 
 
 //Добавляем новую запись в Инфо
-    public function scopeAddInf($query, $userid , $fio, $country, $city, $birthDate)
+    public function scopeAddUserInf($query, $userid , $fio, $country, $city, $birthDate)
     {
         $query->insert(['user_id' => $userid,
                             'FIO' => $fio,
@@ -32,14 +32,27 @@ class Users_information extends Model
     }
 
 //Список всех пользователей
-    public function scopeAllUsersInf($query)
+    public function scopeGetAllUsersInf($query)
     {
-        return $query->where([['user_id', '<>', '0']]);
+        return $query->join('users', 'users_informations.user_id','=','users.user_id')
+            ->join('role','users.role_id','=','role.role_id')
+            ->select('users.*','users_informations.*','role.*')
+            ->orderBy('inform_id');
     }
 //информация по одному пользователю
-    public function scopeUpdUsersInf($query, $inform_id)
+    public function scopeGetOneUsersInf($query, $informid)
     {
-        return $query->where('inform_id',$inform_id)->get()->ToArray();
+        return $query->where('inform_id',$informid)->get()->ToArray();
+    }
+
+    //Изменяем запись в Users_Information
+    public function scopeUpdUserInf($query, $informid, $fio, $country, $city, $birthDate)
+    {
+        $query->where('inform_id',$informid)->update(['FIO' => $fio,
+            'country'=> $country,
+            'city'=>$city,
+            'birth_date'=>$birthDate
+        ]);
     }
 
 }

@@ -2,10 +2,10 @@
 <center><form method="POST" action="/authorization">
     {{ csrf_field() }}
    Логин: <input type="text" name="login" value={{session()->get('login', '') }}>
-    </br>
-    </br>
+        </br>
+        </br>
 
-   Пароль: <input type="text" name="password">
+   Пароль: <input type="password" name="password">
     </br>
     </br>
 
