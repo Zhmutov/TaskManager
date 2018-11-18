@@ -1,31 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vgalatin
- * Date: 03.11.2018
- * Time: 13:52
- */
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
-
+class User extends Authenticatable
 {
-    public $timestamps = false;
-    public function scopeAuthuser($query)
-    {
-        return $query->where([['login','=',$_POST['login']],['password','=',$_POST['password']]]);
-    }
+    use Notifiable;
 
-    //Добавляем новую запись в Users
-    public function scopeAddUser($query, $login, $password, $role)
-    {
-        $query->insert(['login' => $login,
-            'password'=> $password,
-            'role_id'=>$role
-        ]);
-    }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
 }
