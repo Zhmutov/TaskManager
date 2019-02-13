@@ -1,8 +1,8 @@
-@if (session()->get('role_id',0)==2)
+@if (session()->get('role_id',0)==1)
     <center>
         <form method="POST" action="{{ route('usersList') }}">
             {{ csrf_field() }}
-            <table border="1" >
+            <table border="1" align="left" width="100%" >
                 <tr style="background-color:#228B22">
                     <td width="5%" ><b>ИД</b></td>
                     <td width="50%" ><b>ФИО</b></td>
@@ -21,10 +21,10 @@
                     }
                     ?>
                 </tr>
-            </table>
+            </table><br>
 
 
-            {{ $allUser->links() }}
+         {{ $allUser->links() }}
 
         </form>
     </center>

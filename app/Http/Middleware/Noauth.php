@@ -21,4 +21,3 @@ class Noauth
         return $next($request);
     }
 }
-

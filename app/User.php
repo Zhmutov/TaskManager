@@ -13,10 +13,12 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 
 {
+
     public $timestamps = false;
+
     public function scopeAuthuser($query)
     {
-        return $query->where([['login','=',$_POST['login']],['password','=',$_POST['password']]]);
+        return $query->where([['login', '=', $_POST['login']], ['password', '=', $_POST['password']]]);
     }
 
     //Добавляем новую запись в Users

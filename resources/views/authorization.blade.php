@@ -1,15 +1,27 @@
-@if (session()->get('user_id')=='')
-<center><form method="POST" action="/authorization">
-    {{ csrf_field() }}
-   Логин: <input type="text" name="login" value={{session()->get('login', '') }}>
-        </br>
-        </br>
-
-   Пароль: <input type="password" name="password">
-    </br>
-    </br>
+@if (session()->get('user_id','')=='')
+    <center>
+        <table>
+            <tr>
+                <td>
 
 
-    <input type="submit">
-</form></center>
+                    <form method="POST" action="/authorization">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <legend align="center" title="введите логин и пароль">Авторизация</legend>
+                            <pre>
+Логин:  <input type="text" name="login" value={{session()->get('login', '') }}>
+
+Пароль: <input type="password" name="password">
+
+         <input type="submit">
+</pre>
+                        </fieldset>
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+    </center>
+
 @endif

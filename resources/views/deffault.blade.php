@@ -1,3 +1,5 @@
+
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,12 +17,12 @@
         A:active {
             color: #ff0d1e; /* Цвет активных ссылок */
         }
-        table {
-            width: 100%; /* Ширина таблицы */
-        }
+        /*table {*/
+            /*width: 100%; !* Ширина таблицы *!*/
+        /*}*/
         td {
             padding: 10px;
-            vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+            /*vertical-align: top; !* Выравнивание по верхнему краю ячеек *!*/
         }
         .col1 { background: #ccc; }
         .col2 { background: #ffd; }
@@ -30,10 +32,11 @@
 <body>
 <table Border=0   width="100%" height="100%">
     <tr >
-        <td bgcolor =  "#0080FF" width="20%" height= "150" ><img width="100%" height="100%" src="/img/123456.jpg"></td>
-        <td bgcolor =  "#0080FF">  @include ('header') </td>
+        <td bgcolor="#A9A9F5" width="20%" height= "150" ><img width="100%" height="100%" src="/img/1234.jpg"></td>
+        <td bgcolor =  "#A9A9F5" valign="top">  @include ('header') </td>
     <tr>
-        <td  bgcolor =  "#0080FF" >@include('leftmenu')</td>  <td>{{session()->get('message','')}} @if(isset($inf))  @include($inf,$nextInf) @endif </td>
+        <td  bgcolor =  "#A9A9F5" valign="top" >@include('leftmenu')</td>
+        <td bgcolor="#FBEFEF" valign ='top'><center>{{session()->get('message','')}}</center>@if(isset($inf))  @include($inf,$nextinf)@else <legend align="center"> Информация о структуре БД проекта</legend><img width="100%" height="100%" src="/img/BD.jpg"> @endif </td>
     </tr>
 </table>
 
@@ -47,22 +50,31 @@
 
 
 <script>
+
     $(document).ready(function() {
-        $('#text').summernote({
-            lang:'ru-RU',
-            height:200,
-            width:800,
-            right: 10,
-            minHeight:200,
-            padding: 20,
-            //maxHeight:200,
-            focus:true,
-            placeholder:'Введите данные',
-            fontNames:['Arial','Times New Roman','Helvetica']
-        });
+
+       $('#text').summernote({
+           lang:'ru-RU',
+           height:200,
+           width:830,
+           right: 10,
+           minHeight:200,
+           padding: 20,
+           //maxHeight:200,
+           focus:true,
+           placeholder:'Введите данные',
+           fontNames:['Arial','Times New Roman','Helvetica']
+       });
+
+
+
     });
+
+
+
     var postForm = function() {
         var text = $('textarea[name="text"]').html($('#text').code());}
+
 </script>
 
 
